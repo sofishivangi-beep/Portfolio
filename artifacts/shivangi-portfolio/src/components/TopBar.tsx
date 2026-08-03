@@ -30,7 +30,9 @@ export function TopBar() {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" className="min-w-[120px] rounded-xl border-black/5 bg-white/95 backdrop-blur-md shadow-sm">
-            <DropdownMenuItem className="cursor-pointer text-xs justify-center font-medium">Work</DropdownMenuItem>
+            <DropdownMenuItem asChild className="cursor-pointer text-xs justify-center font-medium">
+              <Link href="/work">Work</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer text-xs justify-center font-medium">About</DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer text-xs justify-center font-medium">Contact</DropdownMenuItem>
           </DropdownMenuContent>

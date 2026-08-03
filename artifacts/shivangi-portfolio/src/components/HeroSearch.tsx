@@ -1,12 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Search, ArrowUp, Grid, User, Calendar, FileText } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 export function HeroSearch() {
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [, setLocation] = useLocation();
 
-  const handleShortcutClick = (text: string) => {
+  const handleShortcutClick = (text: string, href?: string) => {
+    if (href) { setLocation(href); return; }
     setQuery(text);
     inputRef.current?.focus();
   };
@@ -63,7 +66,7 @@ export function HeroSearch() {
         <ShortcutButton 
           icon={<Grid className="w-3.5 h-3.5" />} 
           label="Work" 
-          onClick={() => handleShortcutClick("Tell me about Shivangi's work")}
+          onClick={() => handleShortcutClick('', '/work')}
         />
         <ShortcutButton 
           icon={<User className="w-3.5 h-3.5" />} 
