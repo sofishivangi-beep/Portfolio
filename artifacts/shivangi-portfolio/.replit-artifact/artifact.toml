@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Shivangi's Portfolio"
+description = "A personal portfolio website for Shivangi, styled after chirag.design — a clean, minimal AI-powered portfolio with a soft gradient background, a centered chat-style AI interface that says 'Hello! Hello! I'm Shivangi's portfolio AI', quick-access pill buttons (Work, About, Experience, Resume), a handwritten-style logo, and a live date/time display."
+version = "1.0.0"
+id = "artifacts/shivangi-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22343
+
+[services.development]
+run = "pnpm --filter @workspace/shivangi-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/shivangi-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/shivangi-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22343"
+BASE_PATH = "/"
