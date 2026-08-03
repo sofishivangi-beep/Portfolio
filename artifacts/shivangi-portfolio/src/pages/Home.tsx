@@ -67,6 +67,20 @@ export default function Home() {
   const isChat = messages.length > 0;
   const hasText = query.trim().length > 0;
 
+  // Handle redirect from Work page's More Options buttons
+  useEffect(() => {
+    const pending = sessionStorage.getItem('pendingPill');
+    if (pending) {
+      sessionStorage.removeItem('pendingPill');
+      const label = PILL_LABELS[pending] ?? pending;
+      const userMsg: Message = { role: 'user', text: label };
+      const aiMsg = buildAiContent(pending, label);
+      setMessages([userMsg, aiMsg]);
+      setShownTopics(new Set([pending]));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Scroll to bottom whenever messages grow
   useEffect(() => {
     if (isChat) {

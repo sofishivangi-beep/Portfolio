@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Grid, User, Calendar, FileText, ArrowUpRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid, User, Calendar, FileText, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export type Message =
   | { role: 'user'; text: string }
@@ -17,9 +17,79 @@ const SHOWN_LABELS: Record<string, string> = {
   resume: 'Resume',
 };
 
+const CAROUSEL_SLIDES = [
+  {
+    label: 'Photo 1',
+    bg: 'from-violet-200 via-purple-100 to-pink-100',
+  },
+  {
+    label: 'Photo 2',
+    bg: 'from-sky-200 via-blue-100 to-indigo-100',
+  },
+  {
+    label: 'Photo 3',
+    bg: 'from-emerald-200 via-teal-100 to-cyan-100',
+  },
+];
+
+function AboutCarousel() {
+  const [active, setActive] = useState(0);
+
+  function prev() {
+    setActive((a) => (a - 1 + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length);
+  }
+  function next() {
+    setActive((a) => (a + 1) % CAROUSEL_SLIDES.length);
+  }
+
+  return (
+    <div className="relative w-full rounded-2xl overflow-hidden select-none">
+      {/* Slide */}
+      <div
+        className={`w-full aspect-[16/9] bg-gradient-to-br ${CAROUSEL_SLIDES[active].bg} flex flex-col items-center justify-center gap-2 transition-all duration-300`}
+      >
+        <div className="w-14 h-14 rounded-full bg-white/40 border border-white/60 flex items-center justify-center">
+          <User className="w-6 h-6 text-black/25" />
+        </div>
+        <p className="text-[12px] font-medium text-black/30 tracking-wide uppercase">{CAROUSEL_SLIDES[active].label} — placeholder</p>
+      </div>
+
+      {/* Prev / Next */}
+      <button
+        onClick={prev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 flex items-center justify-center hover:bg-white hover:shadow-sm transition-all"
+      >
+        <ChevronLeft className="w-4 h-4 text-black/50" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 flex items-center justify-center hover:bg-white hover:shadow-sm transition-all"
+      >
+        <ChevronRight className="w-4 h-4 text-black/50" />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {CAROUSEL_SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+              i === active ? 'bg-black/50 w-3' : 'bg-black/20'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function AboutResponse() {
   return (
     <div className="space-y-4">
+      {/* Image carousel */}
+      <AboutCarousel />
+
       <p className="text-[15px] leading-relaxed text-[#1a1a1a]">
         <span className="font-semibold">Hi, I'm Shivangi — a Product & UX Designer</span> who loves crafting
         thoughtful digital experiences. I believe great design lives at the intersection of

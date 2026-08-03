@@ -1,6 +1,6 @@
 import { TopBar } from '@/components/TopBar';
-import { ArrowUpRight, ArrowLeft } from 'lucide-react';
-import { Link } from 'wouter';
+import { ArrowUpRight, User, Calendar, FileText } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 const projects = [
   {
@@ -96,7 +96,21 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
   );
 }
 
+const MORE_OPTIONS = [
+  { key: 'about', label: 'About', icon: <User className="w-3.5 h-3.5" /> },
+  { key: 'experience', label: 'Experience', icon: <Calendar className="w-3.5 h-3.5" /> },
+  { key: 'resume', label: 'Resume', icon: <FileText className="w-3.5 h-3.5" /> },
+];
+
 export default function Work() {
+  const [, setLocation] = useLocation();
+
+  function handleOption(key: string) {
+    setLocation('/');
+    // Store pending action so Home picks it up
+    sessionStorage.setItem('pendingPill', key);
+  }
+
   return (
     <div className="relative min-h-[100dvh] w-full overflow-hidden bg-white text-foreground">
       {/* Background blobs — same as Home */}
@@ -129,16 +143,6 @@ export default function Work() {
 
         {/* Page content */}
         <main className="flex-1 w-full max-w-[860px] mx-auto pt-28 pb-16">
-          {/* Back button */}
-          <Link
-            href="/"
-            data-testid="link-back-home"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-black/40 hover:text-black/80 transition-colors mb-6 group"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-            Back
-          </Link>
-
           {/* AI-response style header */}
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 text-[13px] text-black/35 mb-4">
@@ -161,6 +165,24 @@ export default function Work() {
           <p className="mt-10 text-[13px] text-black/30 text-center">
             More case studies coming soon
           </p>
+
+          {/* More options */}
+          <div className="mt-10 border-t border-black/6 pt-8">
+            <p className="text-[12px] font-medium text-black/35 mb-3">More Options:</p>
+            <div className="flex flex-wrap gap-2">
+              {MORE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.key}
+                  data-testid={`button-option-${opt.key}`}
+                  onClick={() => handleOption(opt.key)}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/8 bg-white/70 backdrop-blur-sm text-[13px] font-medium text-black/60 hover:text-black/90 hover:bg-white hover:border-black/15 hover:shadow-sm transition-all duration-200"
+                >
+                  <span className="opacity-60">{opt.icon}</span>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </main>
       </div>
     </div>
