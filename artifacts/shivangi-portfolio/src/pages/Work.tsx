@@ -1,5 +1,6 @@
 import { TopBar } from '@/components/TopBar';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft } from 'lucide-react';
+import { Link } from 'wouter';
 
 const projects = [
   {
@@ -128,6 +129,16 @@ export default function Work() {
 
         {/* Page content */}
         <main className="flex-1 w-full max-w-[860px] mx-auto pt-28 pb-16">
+          {/* Back button */}
+          <Link
+            href="/"
+            data-testid="link-back-home"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-black/40 hover:text-black/80 transition-colors mb-6 group"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+            Back
+          </Link>
+
           {/* AI-response style header */}
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 text-[13px] text-black/35 mb-4">
