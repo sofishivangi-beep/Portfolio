@@ -75,9 +75,11 @@ export function InsightCard({
 export function MetricCard({
   value,
   label,
+  detail,
 }: {
   value: string;
   label: string;
+  detail?: string;
 }) {
   return (
     <div className="p-6 md:p-8 rounded-2xl border border-black/5 bg-white text-center">
@@ -85,6 +87,11 @@ export function MetricCard({
         {value}
       </p>
       <p className="mt-2 text-[13px] text-black/45 leading-snug">{label}</p>
+      {detail && (
+        <p className="mt-3 pt-3 border-t border-black/5 text-[11px] text-black/30 leading-relaxed">
+          {detail}
+        </p>
+      )}
     </div>
   );
 }
