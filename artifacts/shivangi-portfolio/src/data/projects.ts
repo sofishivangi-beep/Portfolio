@@ -20,8 +20,9 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: 'Redesigning the Onboarding Experience',
-    tag: 'UX Research',
+    slug: 'bt',
+    title: 'AI-Driven Customer Support for British Telecom',
+    tag: 'SERVICE DESIGN',
     gradient: 'from-violet-300 via-purple-400 to-fuchsia-500',
     accent: '#ede9fe',
     mockBg: 'bg-violet-50',
